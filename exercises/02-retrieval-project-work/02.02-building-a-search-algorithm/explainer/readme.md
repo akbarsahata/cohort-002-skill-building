@@ -271,7 +271,7 @@ export async function loadOrGenerateEmbeddings(
       );
 
       const { embeddings } = await embedMany({
-        model: google.textEmbeddingModel('text-embedding-004'),
+        model: google.textEmbeddingModel('gemini-embedding-001'),
         values: batch.map((e) => `${e.subject} ${e.body}`),
       });
 
@@ -377,7 +377,7 @@ export async function searchWithEmbeddings(
 
   // Generate query embedding
   const { embedding: queryEmbedding } = await embed({
-    model: google.textEmbeddingModel('text-embedding-004'),
+    model: google.textEmbeddingModel('gemini-embedding-001'),
     value: query,
   });
 

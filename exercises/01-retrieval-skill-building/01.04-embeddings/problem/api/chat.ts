@@ -32,10 +32,10 @@ export const POST = async (req: Request): Promise<Response> => {
     execute: async ({ writer }) => {
       // TODO: call the searchEmails function with the
       // conversation history to get the search results
-      const searchResults = TODO;
+      const searchResults = await searchEmails(formatMessageHistory(messages));
 
       // TODO: take the top X search results
-      const topSearchResults = TODO;
+      const topSearchResults = searchResults.slice(0, 5);
 
       const emailSnippets = [
         '## Emails',

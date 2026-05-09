@@ -1,11 +1,22 @@
 import { useChat } from '@ai-sdk/react';
+import type { UIMessage } from 'ai';
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ChatInput, Message, Wrapper } from './components.tsx';
 import './tailwind.css';
 
+type MyUIMessage = UIMessage<
+  never,
+  {
+    keywords: {
+      keywords: string[];
+      searchQuery: string;
+    };
+  }
+>;
+
 const App = () => {
-  const { messages, sendMessage } = useChat({});
+  const { messages, sendMessage } = useChat<MyUIMessage>({});
 
   const [input, setInput] = useState(
     `What did David say about the mortgage application?`,

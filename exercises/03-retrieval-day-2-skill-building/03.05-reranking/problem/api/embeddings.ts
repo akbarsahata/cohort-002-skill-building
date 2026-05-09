@@ -53,7 +53,7 @@ export const getExistingEmbeddings = async (
 };
 
 const myEmbeddingModel = google.textEmbeddingModel(
-  'text-embedding-004',
+  'gemini-embedding-001',
 );
 
 export const embedChunks = async (): Promise<Embeddings> => {

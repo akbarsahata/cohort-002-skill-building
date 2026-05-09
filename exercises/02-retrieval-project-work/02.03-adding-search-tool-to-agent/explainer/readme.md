@@ -216,7 +216,7 @@ export async function searchWithEmbeddings(
   const emailEmbeddings = await loadOrGenerateEmbeddings(emails);
 
   const { embedding: queryEmbedding } = await embed({
-    model: google.textEmbeddingModel('text-embedding-004'),
+    model: google.textEmbeddingModel('gemini-embedding-001'),
     value: query,
   });
 

@@ -2,6 +2,16 @@ import type { UIMessage } from 'ai';
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 
+type MyUIMessage = UIMessage<
+  never,
+  {
+    keywords: {
+      keywords: string[];
+      searchQuery: string;
+    };
+  }
+>;
+
 function cn(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(' ');
 }
@@ -34,9 +44,14 @@ export const Message = ({
   parts,
 }: {
   role: string;
-  parts: UIMessage['parts'];
+  parts: MyUIMessage['parts'];
 }) => {
   const isUser = role === 'user';
+  const lastKeywordsPartIndex = parts
+    .map((part) => part.type)
+    .lastIndexOf('data-keywords');
+
+  console.log(parts);
 
   return (
     <div className={cn('flex w-full', isUser && 'justify-end')}>
@@ -49,15 +64,45 @@ export const Message = ({
               : 'text-foreground px-4',
           )}
         >
-          {parts.map((part) => {
+          {parts.map((part, index) => {
             if (part.type === 'text') {
               return (
-                <div className="prose prose-sm prose-invert max-w-none">
+                <div
+                  key={part.type + index}
+                  className="prose prose-sm prose-invert max-w-none"
+                >
                   <ReactMarkdown>{part.text}</ReactMarkdown>
                 </div>
               );
             }
-            return '';
+            if (part.type === 'data-keywords') {
+              if (index !== lastKeywordsPartIndex) {
+                return null;
+              }
+
+              return (
+                <div
+                  key={part.type + index}
+                  className="rounded-md border border-border/60 bg-card/40 p-3 text-xs text-muted-foreground space-y-2"
+                >
+                  <div>
+                    <span className="font-semibold text-foreground">
+                      Generated Keywords:
+                    </span>{' '}
+                    {part.data.keywords.length > 0
+                      ? part.data.keywords.join(', ')
+                      : '(streaming...)'}
+                  </div>
+                  <div>
+                    <span className="font-semibold text-foreground">
+                      Semantic Search Query:
+                    </span>{' '}
+                    {part.data.searchQuery || '(streaming...)'}
+                  </div>
+                </div>
+              );
+            }
+            return null;
           })}
         </div>
       </div>

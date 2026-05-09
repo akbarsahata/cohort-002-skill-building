@@ -3,7 +3,7 @@ import { cosineSimilarity, embed } from 'ai';
 import type { DB } from './memory-persistence.ts';
 
 const myEmbeddingModel = google.textEmbeddingModel(
-  'text-embedding-004',
+  'gemini-embedding-001',
 );
 
 export const searchMemoriesViaEmbeddings = async (

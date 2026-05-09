@@ -72,7 +72,7 @@ export const getExistingEmbeddings = async (
 };
 
 const myEmbeddingModel = google.textEmbeddingModel(
-  'text-embedding-004',
+  'gemini-embedding-001',
 );
 
 export const embedEmails = async (
@@ -152,13 +152,30 @@ const embedLotsOfText = async (
   }[]
 > => {
   // TODO: Implement this function by using the embedMany function
-  throw new Error('Not implemented');
+  const embeddings = await embedMany({
+    model: myEmbeddingModel,
+    values: emails.map((email) => email.body),
+  })
+
+  console.log('Embeddings created for batch of emails', embeddings);
+
+
+  return embeddings.embeddings.map((embedding, index) => ({
+    id: emails[index]!.id,
+    embedding,
+  }));
 };
 
 const embedOnePieceOfText = async (
   text: string,
 ): Promise<number[]> => {
   // TODO: Implement this function by using the embed function
+  const embedding = await embed({
+    model: myEmbeddingModel,
+    value: text,
+  });
+
+  return embedding.embedding;
 };
 
 const calculateScore = (
@@ -166,4 +183,5 @@ const calculateScore = (
   embedding: number[],
 ): number => {
   // TODO: Implement this function by using the cosineSimilarity function
+  return cosineSimilarity(queryEmbedding, embedding);
 };

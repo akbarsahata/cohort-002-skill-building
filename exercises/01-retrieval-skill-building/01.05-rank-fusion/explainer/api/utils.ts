@@ -28,7 +28,7 @@ export const loadEmails = async () => {
   return emails;
 };
 
-const RRF_K = 60;
+const RRF_K = 40;
 
 export function reciprocalRankFusion(
   rankings: { email: Email; score: number }[][],

@@ -657,7 +657,7 @@ scorer: ({ input, output, expected }) => {
       .join('\n'),
     reference: expected,
     embeddingModel: google.textEmbeddingModel(
-      'text-embedding-004',
+      'gemini-embedding-001',
     ),
   });
 };

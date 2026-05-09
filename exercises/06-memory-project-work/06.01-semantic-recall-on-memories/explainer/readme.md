@@ -84,7 +84,7 @@ export async function loadOrGenerateEmbeddings<T>(
       console.log(
         `Processing batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(uncachedItems.length / BATCH_SIZE)}`,
       );
-      // CHANGED: Use toText function const { embeddings } = await embedMany({   model: google.textEmbeddingModel('text-embedding-004'),   values: batch.map((item) => toText(item)), });
+      // CHANGED: Use toText function const { embeddings } = await embedMany({   model: google.textEmbeddingModel('gemini-embedding-001'),   values: batch.map((item) => toText(item)), });
       for (let j = 0; j < batch.length; j++) {
         const item = batch[j];
         const embedding = embeddings[j];
@@ -121,7 +121,7 @@ export async function searchWithEmbeddings<T>(
   );
 
   const { embedding: queryEmbedding } = await embed({
-    model: google.textEmbeddingModel('text-embedding-004'),
+    model: google.textEmbeddingModel('gemini-embedding-001'),
     value: query,
   });
 

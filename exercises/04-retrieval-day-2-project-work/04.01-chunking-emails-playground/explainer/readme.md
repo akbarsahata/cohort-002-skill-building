@@ -199,7 +199,7 @@ for (const email of emails) {
 
 ```typescript
 const { embeddings } = await embedMany({
-  model: google.textEmbeddingModel('text-embedding-004'),
+  model: google.textEmbeddingModel('gemini-embedding-001'),
   values: batch.map((e) => emailToText(e)),
 });
 ```
