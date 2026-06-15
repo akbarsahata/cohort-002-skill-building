@@ -19,7 +19,7 @@ The reranking process works in stages:
 - [ ] Review how the search algorithm currently works in `api/search.ts`
 
 The current search process combines multiple ranking methods:
-
+ 
 | Method                       | Purpose                                    |
 | ---------------------------- | ------------------------------------------ |
 | BM25                         | Keyword-based matching scores              |

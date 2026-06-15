@@ -106,7 +106,23 @@ export const searchChunks = async (opts: {
   // that are genuinely helpful for answering the question.
   // If a chunk is only tangentially related or not relevant,
   // exclude its ID.
-  const rerankedResults = TODO;
+  const rerankedResults = await generateObject({
+    model: google('gemini-2.5-flash-lite'),
+    system: `You are a search assistant that helps users find relevant information from a set of text chunks. You are given a search query and a list of text chunks, each with an associated ID. Your task is to identify which chunks are most relevant to the search query and return a ranked list of their IDs. Be selective and only include chunks that are genuinely helpful for answering the question. If a chunk is only tangentially related or not relevant, exclude its ID.`,
+    schema: z.object({
+      resultIds: z
+        .array(z.number())
+        .describe(
+          'An array of IDs corresponding to the most relevant chunks, ranked in order of relevance.',
+        ),
+    }),
+    prompt: `Search Query: ${searchQuery}
+
+Chunks:
+${chunksWithId}
+
+Based on the search query and the content of the chunks, return a ranked list of the IDs of the most relevant chunks. Only include chunks that are genuinely helpful for answering the question.`,
+  });
 
   const approvedChunkIds = rerankedResults.object.resultIds;
 

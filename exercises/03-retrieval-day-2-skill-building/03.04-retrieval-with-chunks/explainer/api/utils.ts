@@ -22,8 +22,8 @@ export const createChunks = async (): Promise<Chunk[]> => {
   const bookText = await loadBookText();
 
   const splitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 2000,
-    chunkOverlap: 200,
+    chunkSize: 1000,
+    chunkOverlap: 100,
     separators: [
       // First, try to split along Markdown headings (starting with level 2)
       '\n--- CHAPTER ---\n',
